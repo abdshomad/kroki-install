@@ -28,7 +28,7 @@ fi
 echo "Restarting Kroki services..."
 
 # Restart services
-if ! $DOCKER_COMPOSE restart; then
+if ! $DOCKER_COMPOSE -f docker-compose-with-nginx.yml restart; then
     echo "Error: Failed to restart services" >&2
     exit 1
 fi

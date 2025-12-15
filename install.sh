@@ -29,7 +29,7 @@ echo "Installing Kroki Docker Compose setup..."
 echo "Pulling Docker images..."
 
 # Pull all images
-if ! $DOCKER_COMPOSE pull; then
+if ! $DOCKER_COMPOSE -f docker-compose-with-nginx.yml pull; then
     echo "Error: Failed to pull Docker images" >&2
     exit 1
 fi
@@ -37,7 +37,7 @@ fi
 echo "Starting services in detached mode..."
 
 # Start services in detached mode
-if ! $DOCKER_COMPOSE up -d; then
+if ! $DOCKER_COMPOSE -f docker-compose-with-nginx.yml up -d; then
     echo "Error: Failed to start services" >&2
     exit 1
 fi

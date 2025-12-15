@@ -27,10 +27,10 @@ fi
 
 echo "Kroki Container Status:"
 echo "======================="
-$DOCKER_COMPOSE ps
+$DOCKER_COMPOSE -f docker-compose-with-nginx.yml ps
 
 echo ""
 echo "Recent logs (last 50 lines, following...):"
 echo "==========================================="
-$DOCKER_COMPOSE logs --tail=50 -f
+$DOCKER_COMPOSE -f docker-compose-with-nginx.yml logs --tail=50 -f
 

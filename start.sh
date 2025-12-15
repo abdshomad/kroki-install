@@ -28,7 +28,7 @@ fi
 echo "Starting Kroki services..."
 
 # Check if services are already running
-RUNNING_SERVICES=$($DOCKER_COMPOSE ps --services --filter "status=running" 2>/dev/null | grep -v '^$' || true)
+RUNNING_SERVICES=$($DOCKER_COMPOSE -f docker-compose-with-nginx.yml ps --services --filter "status=running" 2>/dev/null | grep -v '^$' || true)
 if [ -n "$RUNNING_SERVICES" ]; then
     echo "Some services are already running:"
     echo "$RUNNING_SERVICES"
@@ -37,7 +37,7 @@ if [ -n "$RUNNING_SERVICES" ]; then
 fi
 
 # Start services in detached mode
-if ! $DOCKER_COMPOSE up -d; then
+if ! $DOCKER_COMPOSE -f docker-compose-with-nginx.yml up -d; then
     echo "Error: Failed to start services" >&2
     exit 1
 fi

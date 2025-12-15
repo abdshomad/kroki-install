@@ -1,0 +1,72 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: kroki-nginx
+    ports:
+      - "${PORT:-8000}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - core
+    restart: unless-stopped
+    networks:
+      - kroki-network
+
+  core:
+    image: yuzutech/kroki
+    container_name: kroki-core
+    environment:
+      - KROKI_MERMAID_HOST=mermaid
+      - KROKI_BPMN_HOST=bpmn
+      - KROKI_EXCALIDRAW_HOST=excalidraw
+      - KROKI_DIAGRAMSNET_HOST=diagramsnet
+    expose:
+      - "8000"
+    depends_on:
+      - mermaid
+      - bpmn
+      - excalidraw
+      - diagramsnet
+    networks:
+      - kroki-network
+    restart: unless-stopped
+
+  mermaid:
+    image: yuzutech/kroki-mermaid
+    container_name: kroki-mermaid
+    expose:
+      - "8002"
+    networks:
+      - kroki-network
+    restart: unless-stopped
+
+  bpmn:
+    image: yuzutech/kroki-bpmn
+    container_name: kroki-bpmn
+    expose:
+      - "8003"
+    networks:
+      - kroki-network
+    restart: unless-stopped
+
+  excalidraw:
+    image: yuzutech/kroki-excalidraw
+    container_name: kroki-excalidraw
+    expose:
+      - "8004"
+    networks:
+      - kroki-network
+    restart: unless-stopped
+
+  diagramsnet:
+    image: yuzutech/kroki-diagramsnet
+    container_name: kroki-diagramsnet
+    expose:
+      - "8005"
+    networks:
+      - kroki-network
+    restart: unless-stopped
+
+networks:
+  kroki-network:
+    driver: bridge

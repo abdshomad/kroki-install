@@ -28,7 +28,7 @@ fi
 echo "Stopping Kroki services..."
 
 # Stop services
-if ! $DOCKER_COMPOSE stop; then
+if ! $DOCKER_COMPOSE -f docker-compose-with-nginx.yml stop; then
     echo "Error: Failed to stop services" >&2
     exit 1
 fi
